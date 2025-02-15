@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            align-items: center;
+            background-image: linear-gradient(orange, white, green);
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 48px;
+            color: rgb(248, 245, 245);
+            background-color: black;
+            padding: 20px;
+            margin-top: -5px;
+        }
+        form {
+            width: 35%;
+            margin-left: 33%;
+            font-size: 18px;
+            border: solid rgb(7, 7, 7) 5px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .left{
+            width: 50%;
+            float:left;
+        }
+        .right {
+            width: 50%;
+            float: right;
+        }
+        .btn {
+            color: green;
+            padding: 10px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <center><h1>Registration Form</h1></center>
+
+    <div class="container">
+        <form id="registration-form">
+            <h5 style="color:red">(* means Required)</h5>
+            <fieldset>
+                <div class="left">
+                    <label for="first-name">First Name*</label><br><br><br>
+                    <label for="last-name">Last Name*</label><br><br><br>
+                    <label for="gender">Gender*</label><br><br><br>
+                    <label for="photo">Photo</label><br><br><br>
+                    <label for="fathers-name">Father's Name*</label><br><br><br>
+                    <label for="mothers-name">Mother's Name</label><br><br><br>
+                    <label for="address">Address*</label><br><br><br>
+                    <label for="pin-code">Pin Code*</label><br><br><br>
+                    <label for="adhaar-no">Aadhaar No.*</label><br><br><br>
+                    <label for="mobile-no">Mobile No.*</label><br><br><br>
+                    <label for="qualification">Qualification*</label><br><br><br>
+                    <label for="email">Email ID*</label><br>
+                </div>
+                <div class="right">
+                    <input type="text" id="first-name" required><br><br><br>
+                    <input type="text" id="last-name" required><br><br><br>
+                    <select id="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select><br><br><br>
+                    <input type="file" id="photo"><br><br><br>
+                    <input type="text" id="fathers-name" required><br><br><br>
+                    <input type="text" id="mothers-name"><br><br><br>
+                    <textarea id="address" required></textarea><br><br>
+                    <input type="number" id="pin-code" required><br><br><br>
+                    <input type="number" id="adhaar-no" required><br><br><br>
+                    <input type="number" id="mobile-no" required><br><br><br>
+                    <select id="qualification" required>
+                        <option value="None">None</option>
+                        <option value="10th Passed">10th Passed</option>
+                        <option value="12th Passed">12th Passed</option>
+                        <option value="Graduate Appearance">Graduate Appearance</option>
+                        <option value="Graduated">Graduated</option>
+                        <option value="Other">Other</option>
+                    </select><br><br><br>
+                    <input type="email" id="email" required><br><br><br>
+                </div>
+                <button type="submit" class="btn">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // When form is submitted
+        document.getElementById('registration-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent normal form submission
+
+            // Get form values
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const gender = document.getElementById('gender').value;
+            const photo = document.getElementById('photo').value;
+            const fathersName = document.getElementById('fathers-name').value;
+            const mothersName = document.getElementById('mothers-name').value;
+            const address = document.getElementById('address').value;
+            const pinCode = document.getElementById('pin-code').value;
+            const adhaarNo = document.getElementById('adhaar-no').value;
+            const mobileNo = document.getElementById('mobile-no').value;
+            const qualification = document.getElementById('qualification').value;
+            const email = document.getElementById('email').value;
+
+            // Create a new jsPDF instance
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Set color for question labels (blue)
+            doc.setTextColor(0, 51, 102); // Dark Blue for the labels
+
+            // Add question labels to the PDF
+            doc.setFont("times");
+            doc.setFontSize(20);
+            doc.text("Registration Form", 100, 10);
+            doc.text("First Name:", 50, 30);
+            doc.text("Last Name:",  50, 40);
+            doc.text("Gender:",  50, 50);
+            doc.text("Photo:",  50, 60);
+            doc.text("Father's Name:",  50, 70);
+            doc.text("Mother's Name:",  50, 80);
+            doc.text("Address:",  50, 90);
+            doc.text("Pin Code:",  50, 100);
+            doc.text("Aadhaar No:",  50, 110);
+            doc.text("Mobile No:",  50, 120); // Added Mobile No.
+            doc.text("Qualification:",  50, 130);
+            doc.text("Email ID:", 50, 140);
+
+            // Set color for filled data (answers) (green)
+            doc.setTextColor(0, 102, 0); // Green for the answers
+
+            // Add the corresponding answers to the PDF
+            doc.text(firstName, 150, 30);
+            doc.text(lastName, 150, 40);
+            doc.text(gender, 150, 50);
+            doc.text(photo, 150, 60);
+            doc.text(fathersName, 150, 70);
+            doc.text(mothersName, 150, 80);
+            doc.text(address, 150, 90);
+            doc.text(pinCode, 150, 100);
+            doc.text(adhaarNo, 150, 110);
+            doc.text(mobileNo, 150, 120); // Added Mobile No.
+            doc.text(qualification, 150, 130);
+            doc.text(email, 150, 140);
+
+            // Save the PDF with the First Name as the filename
+            const fileName = `${firstName}_registration_form.pdf`; // Use First Name as part of the filename
+            doc.save(fileName); // Save the PDF
+        });
+         // Simulate a delay to demonstrate the loading animation
+         window.addEventListener("load", () => {
+            const loadingSpinner = document.querySelector(".loading-spinner");
+            const notificationBox = document.querySelector(".notification-box");
+
+            // Hide the loading spinner and show the notification content after a delay
+            setTimeout(() => {
+                loadingSpinner.style.display = "none";
+                notificationBox.style.display = "block";
+            }, 2000); // 2-second delay
+        });
+    </script>
+</body>
+</html>
